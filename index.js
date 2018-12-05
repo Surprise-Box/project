@@ -7,7 +7,7 @@ var app = express();
 const config ={
  	user: 'postgres',
  	database: 'Surprise_Box',
- 	password: 'Qwe1024rty',
+ 	password: 'xxxx',
  	port: 5432
 };
 
