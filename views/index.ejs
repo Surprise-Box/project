@@ -1,179 +1,175 @@
 <!DOCTYPE html>
-<html lang="ru">
-<head>
-	<title>SurpriseBox</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
 
-	<link rel="stylesheet" href="/static/bootstrap.min.css" type="text/css">
+  <head>
 
-	<script src="/static/jquery.min.js" type="text/javascript"></script>
-	<script src="/static/popper.min.js" type="text/javascript"></script>
-	<script src="/static/bootstrap.min.js" type="text/javascript"></script>
-	 <link rel="stylesheet" href="/static/main.css" type="text/css">
-</head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<body>
-<% include blocks/navbar.ejs %>
+    <title>Главная страница - Surprise Box</title>
 
+    <!-- Bootstrap core CSS -->
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <header class="main-header">
+    <!-- Custom fonts for this template -->
+    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/clean-blog.min.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
+        <a class="navbar-brand" href="/">Surprise Box</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Главная страница</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/gifts">Выбор подарка</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contacts">Контакты</a>
+            </li>
+
+            <% if (obj.email !== undefined) {%>
+               <li class="nav-item">
+               <a class="nav-link" href="/profile"><%=obj.email%></a>
+            </li>
+
+              <%}%>
+          </ul>
         </div>
-        <div class="promo">
-          <div class="promo-title">ВЫБОР ПОДАРКА ЕЩЕ НИКОГДА НЕ БЫЛ ТАКИМ ЛЕГКИМ!</div>
-          <p>Поиск идеального подарка для вас и ваших близких.</p>
-          <a href="/sign" class="btn btn-green">Регистрация</a>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('static/img/home-bg.jpg')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="site-heading">
+              <h1>Surprise Box</h1>
+              <span class="subheading">Сделай подарок своим родным!</span></br></br></br></br></br></br></br></br>
+
+              <% if (obj.email == undefined) {%>
+              <!-- Триггер кнопка модали регистрации-->
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ModalSignUp">
+                  Регистрация
+                </button>
+
+                <!-- Модаль регистрации -->
+                <div class="modal fade" id="ModalSignUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header" style="color: black">
+                       <h4 >Регистраниция</h4>
+                      </div>
+                      <form method="post" action="/" style="color:black;">
+                        <p><input type="text" name="username" value="" placeholder="Имя"></p>
+                        <p><input type="text" name="surname" value="" placeholder="Фамилия"></p>
+                        <p><input type="email" name="email" value="" placeholder="E-mail"></p>
+                        <p><input type="password" name="password" value="" placeholder="Пароль"></p>
+
+                        <p><button type="submit" class="btn btn-primary"> Зарегистрироваться </button></p>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+
+                <!-- Триггер кнопка модали входа-->
+                 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ModalSignIn" >
+                  Вход
+                </button>
+
+                <!-- Модаль входа  -->
+                <div class="modal fade" id="ModalSignIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header" style="color: black;text-align:center;">
+                        <h5>Войти в личный кабинет</h5>
+                      </div>
+                      <form method="post" action="/" style="color:black;">
+                        <p><input type="email" name="email" value="" placeholder="E-mail"></p>
+                        <p><input type="password" name="password" value="" placeholder="Пароль"></p>
+                        <p class="remember_me">
+                        </p>
+                        <p class="submit"><button type="submit" class="btn btn-primary"> Войти </button></p>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+               <%}%>
+
+
+            </div>
+          </div>
         </div>
       </div>
     </header>
 
-    <section class="features">
-      <div class="container">
-        <div class="features-item">
-          <div class="features-icon features-icon-schedule"></div>
-          <h2 class="features-title">Гибкий график обучения</h2>
-          <p>Современный темп жизни требует гибкого подхода к расписанию.</p>
-        </div>
-        <div class="features-item">
-          <div class="features-icon features-icon-practice"></div>
-          <h2 class="features-title">Практические занятия</h2>
-          <p>На одной теории далеко не уедешь поэтому мы обучаем на практике.</p>
-        </div>
-        <div class="features-item">
-          <div class="features-icon features-icon-work"></div>
-          <h2 class="features-title">Не оставим без работы</h2>
-          <p>Хорошие специалисты всегда в цене и Вы станете именно таким.</p>
-        </div>
-      </div>
-    </section>
+    <!-- Main Content -->
 
-    <section class="feedback">
-      <div class="container">
-        <h2 class="feedback-title">Отзывы выпускников</h2>
-        <a href="#" class="feedback-all">Показать все</a>
-        <div class="feedback-item">
-          <div class="feedback-author">
-            <img src="img/user.jpg" width="133" height="133" alt="Иванов Петр">
-            <h3>Иванов Петр Сергеевич</h3>
-            <p>Группа: 04-И-15<br> Выпуск: 2009 г.</p>
-          </div>
-          <blockquote class="feedback-content">
-            <h3>Тяжело в учении, легко в бою!</h3>
-            <p>Во время обучения было очень тяжело, практические занятия требовали усидчивости и гибкости ума. Однако, по прошествии времени, понял, что все это было не зря! Устроился в ведущую студию своего города сразу после выпуска, а проработав там три года основал свою собственную!</p>
-          </blockquote>
-        </div>
-      </div>
-    </section>
 
-    <section class="contacts">
+    <!-- Footer -->
+    <footer>
       <div class="container">
-        <h2 class="contacts-title">Обратная связь</h2>
-        <form class="contacts-form" action="" method="post">
-          <table>
-            <tr>
-              <td class="title">
-                <label for="e-mail">E-mail:</label>
-              </td>
-              <td class="field">
-                <input type="text" id="e-mail" name="e-mail" placeholder="Ваш e-mail">
-              </td>
-            </tr>
-            <tr>
-              <td class="title">
-                <label for="fullname">ФИО:</label>
-              </td>
-              <td class="field">
-                <input type="text" id="fullname" name="fullname" placeholder="Представьтесь, пожалуйста">
-              </td>
-            </tr>
-            <tr>
-              <td class="title">Пол:</td>
-              <td class="field">
-                <label><input type="radio" id="man" name="sex" value="man"> Мужской</label>
-                <label><input type="radio" id="woman" name="sex" value="woman"> Женский</label>
-              </td>
-            </tr>
-            <tr>
-              <td class="title">
-                <label for="message">Вопрос:</label>
-              </td>
-              <td class="field">
-                <textarea id="message" name="message" placeholder="Сообщите все, что считаете нужным"></textarea>
-              </td>
-            </tr>
-            <tr>
-              <td class="title"></td>
-              <td class="field">
-                <input type="submit" class="btn btn-green" value="Отправить">
-              </td>
-            </tr>
-          </table>
-        </form>
-        <div class="contacts-instruction">
-          <h3>Заинтересовались обучением на нашей кафедре?</h3>
-          <p>Заполните короткую форму обратной связи и отправьте нам.</p>
-          <p>Мы подготовим для вас индивидуальное предложение и выйдем на связь!</p>
-          <p class="contacts-alert"><strong>Внимание!</strong> Все поля обязательны для заполнения.</p>
-        </div>
-      </div>
-    </section>
-
-    <footer class="main-footer">
-      <div class="container">
-        <div class="footer-top">
-          <div class="footer-address">
-            <div class="logo">
-              <img src="img/logo-footer.png" width="180" height="81" alt="A+">
-            </div>
-            <p>197101, г. Санкт-Петербург,<br> пр. Кронверкский, д. 49</p>
-          </div>
-          <div class="footer-menu">
-            <h3>Обучение</h3>
-            <ul>
-              <li><a href="#">Расписание</a></li>
-              <li><a href="#">Предметы</a></li>
-              <li><a href="#">Практика</a></li>
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <ul class="list-inline text-center">
+              <li class="list-inline-item">
+                <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
             </ul>
-          </div>
-          <div class="footer-menu">
-            <h3>Выпускники</h3>
-            <ul>
-              <li><a href="#">Достижения</a></li>
-              <li><a href="#">Отзывы</a></li>
-              <li><a href="#">Найти</a></li>
-            </ul>
-          </div>
-          <div class="footer-menu">
-            <h3>Как поступить</h3>
-            <ul>
-              <li><a href="#">На коммерцию</a></li>
-              <li><a href="#">Целевой набор</a></li>
-              <li><a href="#">На бюджет</a></li>
-            </ul>
-          </div>
-          <div class="footer-menu">
-            <h3>Контакты</h3>
-            <ul>
-              <li><a href="#">Обратная связь</a></li>
-              <li><a href="#">Схема проезда</a></li>
-              <li><a href="#">Телефон/факс</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <div class="copyright">Все права защищены © 2015</div>
-          <div class="footer-social-promo">Подписчикам в соц.сетях — скидки на обучение!</div>
-          <div class="footer-social">
-            <a href="#" class="social-btn social-btn-vk">Вконтакте</a>
-            <a href="#" class="social-btn social-btn-fb">Фейсбук</a>
-            <a href="#" class="social-btn social-btn-tw">Твиттер</a>
+            <p class="copyright text-muted">Copyright &copy; Your Website 2018</p>
           </div>
         </div>
       </div>
     </footer>
 
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-</body>
+    <!-- Custom scripts for this template -->
+    <script src="static/js/clean-blog.min.js"></script>
+
+  </body>
 
 </html>
