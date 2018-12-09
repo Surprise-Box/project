@@ -1,0 +1,5 @@
+{
+    "appService.showBuildDuringDeployPrompt": false,
+    "appService.defaultWebAppToDeploy": "/subscriptions/ed8985b6-6c8c-49ba-9eff-8f3638b270ee/resourceGroups/appsvc_rg_linux_centralus/providers/Microsoft.Web/sites/surprise-box",
+    "appService.deploySubpath": ""
+}

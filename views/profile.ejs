@@ -47,7 +47,7 @@
 
             <% if (obj.email !== undefined) {%>
                <li class="nav-item">
-               <a class="nav-link" href="/contacts"><%=obj.email%></a>
+               <a class="nav-link" href="/profile"><%=obj.email%></a>
             </li>
 
               <%}%>
@@ -77,12 +77,16 @@
                 <%}%>
                 <div class="btn-group btn-group-lg" role="group">
 
-                             <form action="/buy" method="post">
+                             <a href="/buy">
                          <button type="button" class="btn btn-primary " >
                             Корзина
                         </button>
-                            </form>
-
+                             </a>
+                             <a href="/history">
+                         <button type="button" class="btn btn-primary " >
+                            Покупки
+                        </button>
+                             </a>
 
                         <form action="/out" method="post">
                             <button type="submit" class="btn btn-primary "> Выйти </button>

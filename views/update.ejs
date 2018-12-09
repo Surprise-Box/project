@@ -118,6 +118,8 @@
                         <p>
   <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1" >Для кого подходит этот подарок</a>
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2" >К какому хобби подходит</button>
+                            </br> </br>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3" >К какому празднику подходит</button>
 <div class="row" style="color: black">
   <div class="col">
     <div class="collapse multi-collapse" id="multiCollapseExample1">
@@ -138,9 +140,24 @@
       <div class="card card-body"  >
       <% for (i=0;i<hobby.length; i++){%>
                                      <div class="form-check" style="color: black">
-                                      <input class="form-check-input" type="checkbox" name="hobbies" id="gridCheck1" value=<%=hobby[i].id_hobbies%> >
+                                      <input class="form-check-input" type="checkbox" name="hobby" id="gridCheck1" value=<%=hobby[i].id_hobbies%> >
                                       <label class="form-check-label" for="gridCheck1"  >
-                        <p><%=hobby[i].hobby%></p>
+                        <%=hobby[i].hobby%>
+                                      </label>
+                                    </div>
+                                     <%}%>
+      </div>
+    </div>
+  </div>
+
+                        <div class="col" >
+    <div class="collapse multi-collapse" id="multiCollapseExample3" >
+      <div class="card card-body"  >
+      <% for (i=0;i<celebration.length; i++){%>
+                                     <div class="form-check" style="color: black">
+                                      <input class="form-check-input" type="checkbox" name="celebration" id="gridCheck1" value=<%=celebration[i].id_celebration%> >
+                                      <label class="form-check-label" for="gridCheck1"  >
+                        <%=celebration[i].name%>
                                       </label>
                                     </div>
                                      <%}%>

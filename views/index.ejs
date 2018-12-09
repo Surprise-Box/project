@@ -80,10 +80,11 @@
                        <h4 >Регистраниция</h4>
                       </div>
                       <form method="post" action="/" style="color:black;">
-                        <p><input type="text" name="username" value="" placeholder="Имя"></p>
-                        <p><input type="text" name="surname" value="" placeholder="Фамилия"></p>
-                        <p><input type="email" name="email" value="" placeholder="E-mail"></p>
-                        <p><input type="password" name="password" value="" placeholder="Пароль"></p>
+                        <p><input type="text" name="username" value="" placeholder="Имя" required pattern="^[a-zA-Zа-яА-Я]+$"></p>
+                        <p><input type="text" name="surname" value="" placeholder="Фамилия"required pattern="^[a-zA-Zа-яА-Я]+$"></p>
+                        <p><input type="email" name="email" value="" placeholder="E-mail" required></p>
+                        <p><input type="password" name="password" value="" placeholder="Пароль"required pattern="^[^2-20]+[^!@#$%^&*()_\s]+$"></p>
+                        <p><input type="text" name="phone" value="" placeholder="Номер телефона без 8" required pattern="[0-9]{10}"></p>
 
                         <p><button type="submit" class="btn btn-primary"> Зарегистрироваться </button></p>
                       </form>
@@ -105,8 +106,8 @@
                         <h5>Войти в личный кабинет</h5>
                       </div>
                       <form method="post" action="/" style="color:black;">
-                        <p><input type="email" name="email" value="" placeholder="E-mail"></p>
-                        <p><input type="password" name="password" value="" placeholder="Пароль"></p>
+                        <p><input type="email" name="email" value="" placeholder="E-mail" required></p>
+                        <p><input type="password" name="password" value="" placeholder="Пароль" required pattern="^[^2-20]+[^!@#$%^&*()_\s~]+$"></p>
                         <p class="remember_me">
                         </p>
                         <p class="submit"><button type="submit" class="btn btn-primary"> Войти </button></p>
