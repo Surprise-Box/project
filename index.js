@@ -188,6 +188,7 @@ app.get('/gifts/:id',  function (req, res) {
          else {
              client.query('select * from gifts where id_gifts=$1',[id], function (err, result) {
                  console.log(err);
+                 console.log(result);
                 gift=result.rows[0];
                     client.query('select reviews.review,client.email from reviews,client where reviews.id_client=client.id_client and status=true and id_reviews in (select id_reviews from gifts_reviews where id_gifts=$1)',[id], function(err, result){
 

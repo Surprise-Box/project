@@ -85,6 +85,24 @@ describe('Тесты', function(){
     });
 
 
+        it('Проверка кнопки выхода', function(done){
+            this.timeout(50000);
+        supertest('https://surprisebos.herokuapp.com')
+
+            .post('/')
+            .type('form')
+            .field('email','grigor777001@yandex.ru')
+            .field('password','grigor')
+            .redirects('/')
+            .expect(404)
+            .end(function(err, res){
+                res.status.should.equal(404);
+
+                done();
+            });
+
+
+    });
 
 
 
