@@ -35,11 +35,6 @@ var bcrypt = require('bcrypt');
 
 
 
-
-
-
-
-
 app.get('/',function (req, res) {
     var obj ={
         email: req.cookies.email
@@ -53,7 +48,7 @@ app.get('/',function (req, res) {
 
 });
 
-app.post("/", urlencodedParser, function (req, res) {
+app.post('/', urlencodedParser, function (req, res) {
     if(!req.body) return res.sendStatus(400);
     if(!req.body.username) {
         pool.connect(function (err, client, done) {
@@ -102,12 +97,50 @@ if(req.body.username){
 
 });
 
-
 app.get('/contacts',function (req, res) {
      var obj ={
         email: req.cookies.email
     };
     res.render('contacts', {obj: obj});
+});
+
+app.post('/contacts', urlencodedParser, function (req, res){
+ var obj ={
+     name: req.body.name,
+     email: req.body.email,
+     phone: req.body.phone,
+     message: req.body.message,
+ }
+ console.log(obj);
+ res.redirect('/contacts');
+
+
+});
+
+app.post('/deletereviews', urlencodedParser, function (req, res){
+ pool.connect(function(err,client,done){
+     client.query('delete from gifts_reviews where id_reviews=$1',[req.body.id],function(err, result) {
+         client.query('delete from reviews where id_reviews=$1', [req.body.id], function (err, result) {
+
+             done();
+             res.redirect('/reviews');
+         });
+     });
+ });
+
+
+});
+
+ app.post('/okreviews', urlencodedParser, function (req, res){
+ pool.connect(function(err,client,done){
+     client.query('update reviews set status=true where id_reviews=$1',[req.body.id],function(err, result){
+
+            done();
+            res.redirect('/reviews');
+     });
+ });
+
+
 });
 
 app.get('/profile',function (req, res) {
@@ -143,20 +176,22 @@ app.get('/gifts',function (req, res) {
     });
 });
 
-
-
 app.get('/gifts/:id',  function (req, res) {
     var id = req.params.id;
-        console.log(id);
+
          pool.connect(function (err, client, done) {
          if (err) {
              console.log('не работает')
          }
          else {
              client.query('select * from gifts where id_gifts=$1',[id], function (err, result) {
-                 done();
+                 console.log(err);
+                gift=result.rows[0];
+                    client.query('select reviews.review,client.email from reviews,client where reviews.id_client=client.id_client and status=true and id_reviews in (select id_reviews from gifts_reviews where id_gifts=$1)',[id], function(err, result){
 
-                 res.render('onegift',{gifts:result.rows[0],email: req.cookies.email, name: req.cookies.name});
+                 done();
+                 res.render('onegift',{gifts: gift,email: req.cookies.email, name: req.cookies.name, reviews: result.rows});
+                });
              });
          }
     });
@@ -164,7 +199,24 @@ app.get('/gifts/:id',  function (req, res) {
 
 });
 
+app.get('/reviews', function(req,res){
+       pool.connect(function (err, client, done) {
+         if (err) {
+             console.log('не работает')
+         }
+         else {
+             client.query('select reviews.id_reviews, reviews.review, gifts_reviews.id_gifts,client.email  ' +
+                 'from reviews,client,gifts_reviews  ' +
+                 'where status=false and ' +
+                 'reviews.id_reviews=gifts_reviews.id_reviews and ' +
+                 'reviews.id_client=client.id_client', function (err, result) {
+                 done();
+                 res.render('reviews',{email: req.cookies.email, name: req.cookies.name, reviews: result.rows});
 
+             });
+         }
+    });
+});
 
 app.post('/yourgifts', urlencodedParser, function (req, res){
     pool.connect(function(err,client,done){
@@ -216,9 +268,6 @@ app.post('/yourgifts', urlencodedParser, function (req, res){
 
 });
 
-
-
-
 app.post('/buy', urlencodedParser, function (req, res){
     let options={
         year: 'numeric',
@@ -249,7 +298,6 @@ app.post('/buy', urlencodedParser, function (req, res){
     });
 
 });
-
 
 app.post('/out',function (req, res){
      res.clearCookie('name');
@@ -316,6 +364,7 @@ app.post('/buygift', urlencodedParser, function(req, res){
     });
 
 });
+
 app.get('/update',function (req, res) {
 
      pool.connect(function (err, client, done) {
@@ -397,6 +446,25 @@ app.get('/history', function (req, res){
 app.get('/errorpassword',function (req, res) {
 
     res.render('errorpassword');
+});
+
+app.post('/comment',urlencodedParser, function(req, res){
+   pool.connect(function(err,client,done){
+        if (err) console.log('не рабоате')
+        else {
+            client.query('select id_client from client where email=$1',[req.cookies.email],function(err,result){
+                var id = result.rows[0].id_client;
+                   client.query('insert into reviews(review, id_client,status) values($1,$2,false) returning id_reviews',[req.body.review, id], function(err, result){
+                       console.log(result.rows[0].id_reviews);
+                       client.query('insert into gifts_reviews(id_reviews,id_gifts) values($1,$2);',[result.rows[0].id_reviews,req.body.id_gift], function(err, result){
+                            done();
+                            res.redirect('/gifts/'+req.body.id_gift);
+
+                       });
+                       });
+                   });
+        }
+    });
 });
 
 app.get('/connect', function(req, res){

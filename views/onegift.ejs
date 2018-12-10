@@ -73,11 +73,14 @@
                       <p><%=gifts.description%></p>
 
 
-
+                    <% if (email !== undefined) {%>
                       <form method="post" action="/buy" style="color:black;">
                          <input type="hidden" name="id_gift" value=<%=gifts.id_gifts%>>
                         <p><button type="submit" class="btn btn-primary"> Добавить в корзину </button></p>
                       </form>
+
+                      <%}%>
+
 
 
 
@@ -92,7 +95,38 @@
 
     <!-- Post Content -->
 
+<div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
 
+          <%if (reviews[0] !== undefined){%>
+          <hr>
+          <%for (i=0;i<reviews.length;i++){%>
+          <div class="post-preview">
+              <h3 class="post-subtitle">
+                <%=reviews[i].review%>
+              </h3>
+            <p class="post-meta"><%=reviews[i].email%></p>
+          </div>
+          <hr>
+          <%}%>
+          <%}%>
+
+          <% if (email !== undefined) {%>
+                  <form action="/comment" method="post">
+                     <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Оставить отзыв</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="review"></textarea>
+                      </div>
+                    <input type="hidden" name="id_gift" value=<%=gifts.id_gifts%>>
+                    <input type="hidden" name="email" value=<%=email%>>
+                    <button type="submit" class="btn btn-primary" >Отправить</button>
+                  </form>
+                      <%}%>
+
+        </div>
+      </div>
+    </div>
 
 
 
