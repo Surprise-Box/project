@@ -15,7 +15,7 @@ var should = require('should'),
 describe('Тесты', function(){
 
     it('Проверка статуса главной страницы', function(done){
-        supertest('http://localhost:8000')
+        supertest('https://surprisebos.herokuapp.com')
             .get('/')
             .expect(200)
             .end(function(err, res){
@@ -27,7 +27,8 @@ describe('Тесты', function(){
 
 
     it('Проверка подключения к бд', function(done){
-        supertest('http://localhost:8000')
+        this.timeout(50000);
+        supertest('https://surprisebos.herokuapp.com')
             .get('/connect')
             .expect(200)
             .end(function(err, res){
@@ -37,7 +38,8 @@ describe('Тесты', function(){
     });
 
     it('Наличие 2 подарка в бд', function(done){
-        supertest('http://localhost:8000')
+        this.timeout(50000);
+        supertest('https://surprisebos.herokuapp.com')
             .get('/gifts/2/')
             .expect(200)
             .end(function(err, res){
@@ -48,7 +50,8 @@ describe('Тесты', function(){
     });
 
     it('Проверка формы выбора подарка', function(done){
-        supertest('http://localhost:8000')
+        this.timeout(50000);
+        supertest('https://surprisebos.herokuapp.com')
             .post('/yourgifts')
             .type('form')
             .field('recipient','Любимому')
@@ -61,6 +64,23 @@ describe('Тесты', function(){
 
                 done();
             });
+
+    });
+
+
+
+    it('Проверка кнопки выхода', function(done){
+        supertest('https://surprisebos.herokuapp.com')
+            .post('/out')
+            .type('form')
+            .redirects('/')
+            .expect(200)
+            .end(function(err, res){
+                res.status.should.equal(200);
+
+                done();
+            });
+
 
     });
 

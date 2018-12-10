@@ -125,8 +125,10 @@ app.post('/deletereviews', urlencodedParser, function (req, res){
              done();
              res.redirect('/reviews');
          });
-     });
+         });
+
  });
+
 
 
 });
@@ -138,7 +140,7 @@ app.post('/deletereviews', urlencodedParser, function (req, res){
             done();
             res.redirect('/reviews');
      });
- });
+   });
 
 
 });
@@ -398,34 +400,46 @@ app.post('/updategifts', urlencodedParser, function(req, res){
         pool.connect(function (err, client, done) {
             if (err) console.log('не работает')
             else {
-                client.query('insert into gifts(name,price,description,bonus,photo,action) values($1,$2,$3,$4,$5,$6);', [req.body.name, req.body.price, req.body.description, req.body.bonus, req.body.photo, action], function (err, result) {
-                  client.query('select id_gifts from gifts where name = $1 and description = $2',[req.body.name, req.body.description],  function (err, result) {
-                      var id_gifts = result.rows[0].id_gifts;
-                      var recipient = 0;
-                      for (i = 0; i < req.body.recipient.length; i++) {
+                client.query('BEGIN', function (err, result) {
+                    client.query('insert into gifts(name,price,description,bonus,photo,action) values($1,$2,$3,$4,$5,$6);', [req.body.name, req.body.price, req.body.description, req.body.bonus, req.body.photo, action], function (err, result) {
+                        client.query('select id_gifts from gifts where name = $1 and description = $2', [req.body.name, req.body.description], function (err, result) {
+                            var id_gifts = result.rows[0].id_gifts;
+                            var recipient = 0;
+                            for (i = 0; i < req.body.recipient.length; i++) {
 
-                          recipient = req.body.recipient[i];
-                          client.query('insert into gifts_recipient(id_gifts, id_recipient) values($1,$2);', [id_gifts, recipient], function (err, result) { if (err) console.log('не работает')});
+                                recipient = req.body.recipient[i];
+                                client.query('insert into gifts_recipient(id_gifts, id_recipient) values($1,$2);', [id_gifts, recipient], function (err, result) {
+                                    if (err) console.log('не работает')
+                                });
 
-                      }
+                            }
 
-                       for (i = 0; i < req.body.hobby.length; i++) {
+                            for (i = 0; i < req.body.hobby.length; i++) {
 
-                           hobby = req.body.hobby[i];
-                          client.query('insert into gifts_hobbies(id_gifts, id_hobbies) values($1,$2);', [id_gifts, hobby], function (err, result) { if (err) console.log('не работает')});
+                                hobby = req.body.hobby[i];
+                                client.query('insert into gifts_hobbies(id_gifts, id_hobbies) values($1,$2);', [id_gifts, hobby], function (err, result) {
+                                    if (err) console.log('не работает')
+                                });
 
-                       }
-                       for (i = 0; i < req.body.celebration.length; i++) {
+                            }
+                            for (i = 0; i < req.body.celebration.length; i++) {
 
-                          celebration = req.body.celebration[i];
-                          client.query('insert into gifts_celebration(id_gifts, id_celebration) values($1,$2);', [id_gifts, celebration], function (err, result) { if (err) console.log('не работает')});
+                                celebration = req.body.celebration[i];
+                                client.query('insert into gifts_celebration(id_gifts, id_celebration) values($1,$2);', [id_gifts, celebration], function (err, result) {
+                                    if (err) console.log('не работает')
+                                });
 
-                       }
-                      done();
-                      res.redirect('/update');
-                  });
+                            }
+
+                        });
+                    });
+                    client.query('COMMIT', function (err, result) {
+                            done();
+                       res.redirect('/update');
+                });
                 });
             }
+
         });
 
 
