@@ -31,7 +31,7 @@ app.set('view engine', 'ejs');
 
 
 
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 
 
