@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cb967ac8-5d61-453b-941f-e1e519e56b93" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +28,7 @@
           <entry key="ejs" value="6471" />
           <entry key="env" value="105" />
           <entry key="html" value="28" />
-          <entry key="js" value="11599" />
+          <entry key="js" value="11710" />
           <entry key="json" value="24" />
         </counts>
       </usages-collector>
@@ -39,7 +37,7 @@
           <entry key="CSS" value="43" />
           <entry key="HTML" value="6499" />
           <entry key="JSON" value="24" />
-          <entry key="JavaScript" value="11598" />
+          <entry key="JavaScript" value="11709" />
           <entry key="PLAIN_TEXT" value="105" />
           <entry key="SQL" value="1" />
         </counts>
@@ -103,13 +101,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+            <state relative-caret-position="453">
+              <caret line="437" column="232" selection-start-line="437" selection-start-column="232" selection-end-line="437" selection-end-column="232" />
               <folding>
                 <element signature="e#718#819#0" />
                 <element signature="e#875#3080#0" />
-                <element signature="e#3282#5522#0" />
-                <element signature="e#3267#3453#0" />
+                <element signature="e#3571#3862#0" />
+                <element signature="e#3674#3856#0" />
+                <element signature="e#3775#3851#0" />
+                <element signature="e#3973#4264#0" />
                 <element signature="e#3494#4283#0" />
                 <element signature="e#5068#5747#0" />
                 <element signature="e#5812#8052#0" />
@@ -120,7 +120,6 @@
                 <element signature="e#10715#11125#0" />
                 <element signature="e#11166#12004#0" />
                 <element signature="e#12069#14027#0" />
-                <element signature="e#14070#14554#0" />
                 <element signature="e#14603#14640#0" />
                 <element signature="e#14700#15555#0" />
                 <element signature="e#15597#15735#0" />
@@ -579,13 +578,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+        <state relative-caret-position="453">
+          <caret line="437" column="232" selection-start-line="437" selection-start-column="232" selection-end-line="437" selection-end-column="232" />
           <folding>
             <element signature="e#718#819#0" />
             <element signature="e#875#3080#0" />
-            <element signature="e#3282#5522#0" />
-            <element signature="e#3267#3453#0" />
+            <element signature="e#3571#3862#0" />
+            <element signature="e#3674#3856#0" />
+            <element signature="e#3775#3851#0" />
+            <element signature="e#3973#4264#0" />
             <element signature="e#3494#4283#0" />
             <element signature="e#5068#5747#0" />
             <element signature="e#5812#8052#0" />
@@ -596,7 +597,6 @@
             <element signature="e#10715#11125#0" />
             <element signature="e#11166#12004#0" />
             <element signature="e#12069#14027#0" />
-            <element signature="e#14070#14554#0" />
             <element signature="e#14603#14640#0" />
             <element signature="e#14700#15555#0" />
             <element signature="e#15597#15735#0" />

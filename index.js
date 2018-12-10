@@ -435,7 +435,7 @@ app.get('/history', function (req, res){
     pool.connect(function(err,client,done){
         if (err) console.log('не рабоате')
         else {
-            client.query('select gifts.name,gifts.price,gifts.photo,gifts.id_gifts,gifts.description from gifts,gifts_client where gifts.id_gifts = gifts_client.id_gifts and gifts_client.position=false',function(err,result){
+            client.query('select gifts.name,gifts.price,gifts.photo,gifts.id_gifts,gifts.description from gifts,gifts_client,client where gifts.id_gifts = gifts_client.id_gifts and gifts_client.position=false and client.email=$1 and client.id_client=gifts_client.id_client',[req.cookies.email],function(err,result){
                     done();
                     res.render('history',{gifts:result.rows,email: req.cookies.email});
                 });
