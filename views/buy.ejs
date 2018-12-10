@@ -86,12 +86,22 @@
             <small><%=gift[i].price%></small>
           </h3>
 
-            <form action="/buygift" method="post">
+
+           <div class="btn-group btn-group-lg" role="group">
+
+            <form action="/deletegift" method="post">
                  <input type="hidden" name="id_gift" value=<%=gift[i].id_gifts%>>
-                 <button type="submit" class="btn btn-primary btn-lg">
+                 <button type="submit" class="btn btn-danger ">
+                  Удалить
+                </button>
+            </form>
+        <form action="/buygift" method="post">
+                 <input type="hidden" name="id_gift" value=<%=gift[i].id_gifts%>>
+                 <button type="submit" class="btn btn-primary">
                   Купить
                 </button>
             </form>
+           </div>
 
 
         </div>

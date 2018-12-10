@@ -155,6 +155,22 @@ app.get('/profile',function (req, res) {
      }
 });
 
+app.post('/deletegift',urlencodedParser, function (req, res){
+        var id = req.body.id_gift;
+
+    pool.connect(function(err, client, done){
+       if (err){console.log('Не работает')} else
+       {
+           client.query('delete from gifts_client where gifts_client.id_gifts=$1 ',[id],function(err,result){
+               if (err){console.log('Не работает')}
+                done();
+                res.redirect('/buy');
+           });
+       }
+    });
+
+});
+
 app.get('/gifts',function (req, res) {
 
     pool.connect(function (err, client, done) {
