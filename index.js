@@ -53,17 +53,30 @@ app.post('/', urlencodedParser, function (req, res) {
     if(!req.body.username) {
         pool.connect(function (err, client, done) {
             client.query('select * from client where client.email = $1', [req.body.email], function (err, result) {
-                if (result.rows.length != 0) {
-                    console.log('1',req.body.password,'2');
-                    if (bcrypt.hashSync(req.body.password, result.rows[0].salt) == result.rows[0].password) {
-                        res.cookie('name', result.rows[0].name, {expires: new Date(Date.now() + 14400000), httpOnly: true});
-                        res.cookie('email', req.body.email, {expires: new Date(Date.now() + 14400000), httpOnly: true});
-                        res.cookie('user', result.rows[0].super_user, {expires: new Date(Date.now() + 14400000), httpOnly: true});
+                if (result.rows[0] == undefined){res.redirect('/errorpassword');} else { console.log(result.rows[0]);
+                    if (result.rows.length != 0) {
+                        console.log('1', req.body.password, '2');
+                        if (bcrypt.hashSync(req.body.password, result.rows[0].salt) == result.rows[0].password) {
+                            res.cookie('name', result.rows[0].name, {
+                                expires: new Date(Date.now() + 14400000),
+                                httpOnly: true
+                            });
+                            res.cookie('email', req.body.email, {
+                                expires: new Date(Date.now() + 14400000),
+                                httpOnly: true
+                            });
+                            res.cookie('user', result.rows[0].super_user, {
+                                expires: new Date(Date.now() + 14400000),
+                                httpOnly: true
+                            });
 
-                        done();
-                        res.redirect('/');
+                            done();
+                            res.redirect('/');
 
-                    } else { res.redirect('/errorpassword');}
+                        } else {
+                            res.redirect('/errorpassword');
+                        }
+                    }
                 }
             });
         });

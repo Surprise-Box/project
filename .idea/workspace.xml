@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cb967ac8-5d61-453b-941f-e1e519e56b93" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/buy.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/buy.ejs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +30,7 @@
           <entry key="ejs" value="6512" />
           <entry key="env" value="105" />
           <entry key="html" value="28" />
-          <entry key="js" value="12071" />
+          <entry key="js" value="12174" />
           <entry key="json" value="24" />
         </counts>
       </usages-collector>
@@ -40,7 +39,7 @@
           <entry key="CSS" value="43" />
           <entry key="HTML" value="6540" />
           <entry key="JSON" value="24" />
-          <entry key="JavaScript" value="12070" />
+          <entry key="JavaScript" value="12173" />
           <entry key="PLAIN_TEXT" value="105" />
           <entry key="SQL" value="1" />
         </counts>
@@ -104,8 +103,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="163" column="37" selection-start-line="163" selection-start-column="37" selection-end-line="163" selection-end-column="37" />
+            <state relative-caret-position="180">
+              <caret line="55" column="33" selection-start-line="55" selection-start-column="33" selection-end-line="55" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -564,8 +563,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="163" column="37" selection-start-line="163" selection-start-column="37" selection-end-line="163" selection-end-column="37" />
+        <state relative-caret-position="180">
+          <caret line="55" column="33" selection-start-line="55" selection-start-column="33" selection-end-line="55" selection-end-column="33" />
         </state>
       </provider>
     </entry>
