@@ -27,8 +27,8 @@ describe('Тесты', function(){
 
 
     it('Проверка подключения к бд', function(done){
-        this.timeout(50000);
-        supertest('https://surprisebos.herokuapp.com')
+        this.timeout(5000);
+        supertest('https://127.0.0.1:8000')
             .get('/connect')
             .expect(200)
             .end(function(err, res){
@@ -37,20 +37,20 @@ describe('Тесты', function(){
             });
     });
 
-    it('Наличие 2 подарка в бд', function(done){
-        this.timeout(50000);
-        supertest('https://surprisebos.herokuapp.com')
-            .get('/gifts/2/')
-            .expect(200)
-            .end(function(err, res){
-                res.status.should.equal(200);
-                done();
-            });
-
-    });
+    // it('Наличие 2 подарка в бд', function(done){
+    //     this.timeout(50000);
+    //     supertest('https://surprisebos.herokuapp.com')
+    //         .get('/gifts/2/')
+    //         .expect(200)
+    //         .end(function(err, res){
+    //             res.status.should.equal(200);
+    //             done();
+    //         });
+    //
+    // });
 
     it('Проверка формы выбора подарка', function(done){
-        this.timeout(50000);
+        this.timeout(5000);
         supertest('https://surprisebos.herokuapp.com')
             .post('/yourgifts')
             .type('form')
@@ -82,6 +82,23 @@ describe('Тесты', function(){
             });
 
 
+    });
+
+
+
+    var Cookies;
+    it('Вход в систему c верным логином и паролем', function(done) {
+        supertest('https://surprisebos.herokuapp.com')
+            .post('/')
+            .type('form')
+            .send({email: 'grigor777001@yandex.ru', password: 'grigor12'})
+            .end(function(err, res) {
+                if (err) done(err);
+                Cookies = res.headers['set-cookie'];
+                //console.log(Cookies);
+                res.header['location'].should.equal('/errorpassw');
+                done();
+            });
     });
 
 

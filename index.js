@@ -74,6 +74,7 @@ app.post('/', urlencodedParser, function (req, res) {
                             res.redirect('/');
 
                         } else {
+                            done();
                             res.redirect('/errorpassword');
                         }
                     }
@@ -99,6 +100,7 @@ if(req.body.username){
                  res.redirect('/');
              });
              } else {
+                        done();
                     res.redirect('/error');
 
              }
@@ -513,7 +515,8 @@ app.post('/comment',urlencodedParser, function(req, res){
 
 app.get('/connect', function(req, res){
     pool.connect(function (err, client, done) {
-       if (err) {return res.sendStatus(404)} else {return res.sendStatus(200)}
+       if (err) {return res.sendStatus(404); done();} else {return res.sendStatus(200); done();}
+
     });
 });
 app.listen(process.env.PORT);
