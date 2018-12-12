@@ -5,7 +5,7 @@ var should = require('should'),
 describe('Тесты', function(){
 
     it('Проверка статуса главной страницы', function(done){
-        supertest('https://surprisebos.herokuapp.com')
+        supertest('http://127.0.0.1:8000')
             .get('/')
             .expect(200)
             .end(function(err, res){
@@ -18,7 +18,7 @@ describe('Тесты', function(){
 
     it('Проверка подключения к бд', function(done){
         this.timeout(5000);
-        supertest('https://surprisebos.herokuapp.com')
+        supertest('http://127.0.0.1:8000')
             .get('/connect')
             .expect(200)
             .end(function(err, res){
@@ -41,7 +41,7 @@ describe('Тесты', function(){
 
     it('Проверка формы выбора подарка', function(done){
         this.timeout(5000);
-        supertest('https://surprisebos.herokuapp.com')
+        supertest('http://127.0.0.1:8000')
             .post('/yourgifts')
             .type('form')
             .field('recipient','Любимому')
@@ -60,7 +60,7 @@ describe('Тесты', function(){
 
 
     it('Проверка кнопки выхода', function(done){
-        supertest('https://surprisebos.herokuapp.com')
+        supertest('http://127.0.0.1:8000')
             .post('/out')
             .type('form')
             .redirects('/')
@@ -78,7 +78,7 @@ describe('Тесты', function(){
 
     var Cookies;
     it('Вход в систему c верным логином и паролем', function(done) {
-        supertest('https://surprisebos.herokuapp.com')
+        supertest('http://127.0.0.1:8000')
             .post('/')
             .type('form')
             .send({email: 'grigor777001@yandex.ru', password: 'grigor'})
