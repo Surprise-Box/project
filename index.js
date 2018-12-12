@@ -266,7 +266,6 @@ app.post('/yourgifts', urlencodedParser, function (req, res){
                     'gifts.id_gifts = gifts_hobbies.id_gifts and ' +
                 'gifts.id_gifts = gifts_celebration.id_gifts and ' +
                 'gifts.id_gifts = gifts_recipient.id_gifts)', [req.body.recipient, req.body.celebration, req.body.hobby], function (err, result) {
-                                console.log(result.rows);
                                 done();
                                 res.render('yourgifts',{gifts: result.rows, email:req.cookies.email,recipient:req.body.recipient, celebration:req.body.celebration, hobby:req.body.hobby});
                         });
@@ -515,7 +514,7 @@ app.post('/comment',urlencodedParser, function(req, res){
 
 app.get('/connect', function(req, res){
     pool.connect(function (err, client, done) {
-       if (err) {return res.sendStatus(404); done();} else {return res.sendStatus(200); done();}
+       if (err) { done(err);} else {return res.sendStatus(200); done();}
 
     });
 });
