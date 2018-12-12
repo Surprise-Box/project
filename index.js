@@ -53,7 +53,7 @@ app.post('/', urlencodedParser, function (req, res) {
     if(!req.body.username) {
         pool.connect(function (err, client, done) {
             client.query('select * from client where client.email = $1', [req.body.email], function (err, result) {
-                if (result.rows[0] == undefined){res.redirect('/errorpassword');} else { console.log(result.rows[0]);
+                if (result.rows[0] == undefined){done();res.redirect('/errorpassword');} else { console.log(result.rows[0]);
                     if (result.rows.length != 0) {
                         console.log('1', req.body.password, '2');
                         if (bcrypt.hashSync(req.body.password, result.rows[0].salt) == result.rows[0].password) {
@@ -81,7 +81,7 @@ app.post('/', urlencodedParser, function (req, res) {
                 }
             });
         });
-                    }
+    }
 
 
 if(req.body.username){
@@ -106,6 +106,7 @@ if(req.body.username){
              }
              });
          }
+         done();
          });
 
      }
@@ -182,6 +183,7 @@ app.post('/deletegift',urlencodedParser, function (req, res){
                 res.redirect('/buy');
            });
        }
+       done();
     });
 
 });
@@ -206,6 +208,7 @@ app.get('/gifts',function (req, res) {
                  });
              });
          }
+         done();
     });
 });
 
@@ -228,6 +231,7 @@ app.get('/gifts/:id',  function (req, res) {
                 });
              });
          }
+         done();
     });
 
 
@@ -249,6 +253,7 @@ app.get('/reviews', function(req,res){
 
              });
          }
+         done();
     });
 });
 
@@ -295,7 +300,7 @@ app.post('/yourgifts', urlencodedParser, function (req, res){
 
         }
         }
-
+        done();
 
     });
 
@@ -326,6 +331,7 @@ app.post('/buy', urlencodedParser, function (req, res){
                         res.redirect('/buy');
             });
         }
+        done();
 
 
     });
@@ -374,7 +380,7 @@ app.get('/buy',function (req, res) {
 
              });
              }
-
+    done();
 
 
     });
@@ -394,6 +400,7 @@ app.post('/buygift', urlencodedParser, function(req, res){
                 res.redirect('/buy');
            });
        }
+       done();
     });
 
 });
@@ -418,6 +425,7 @@ app.get('/update',function (req, res) {
                         });
                 });
             }
+            done();
         });
 
 
@@ -470,6 +478,7 @@ app.post('/updategifts', urlencodedParser, function(req, res){
                 });
                 });
             }
+            done();
 
         });
 
@@ -485,6 +494,7 @@ app.get('/history', function (req, res){
                     res.render('history',{gifts:result.rows,email: req.cookies.email});
                 });
         }
+        done();
     });
 });
 
@@ -509,13 +519,13 @@ app.post('/comment',urlencodedParser, function(req, res){
                        });
                    });
         }
+        done();
     });
 });
 
 app.get('/connect', function(req, res){
     pool.connect(function (err, client, done) {
        if (err) { done(err);} else {return res.sendStatus(200); done();}
-
     });
 });
 app.listen(process.env.PORT);
