@@ -86,7 +86,7 @@ app.post('/', urlencodedParser, function (req, res) {
 
 if(req.body.username){
      pool.connect(function (err, client, done) {
-         if (err) console.log('не работает')
+         if (err) {console.log('не работает');  done();}
          else {
              client.query('select id_client from client where client.email = $1', [req.body.email], function (err, result) {
                     if (result.rows.length == 0) {
@@ -106,7 +106,7 @@ if(req.body.username){
              }
              });
          }
-         done();
+
          });
 
      }
@@ -175,7 +175,7 @@ app.post('/deletegift',urlencodedParser, function (req, res){
         var id = req.body.id_gift;
 
     pool.connect(function(err, client, done){
-       if (err){console.log('Не работает')} else
+       if (err){console.log('Не работает');done();} else
        {
            client.query('delete from gifts_client where gifts_client.id_gifts=$1 ',[id],function(err,result){
                if (err){console.log('Не работает')}
@@ -183,7 +183,7 @@ app.post('/deletegift',urlencodedParser, function (req, res){
                 res.redirect('/buy');
            });
        }
-       done();
+
     });
 
 });
@@ -193,6 +193,7 @@ app.get('/gifts',function (req, res) {
     pool.connect(function (err, client, done) {
          if (err) {
              console.log('не работает'+ err);
+             done();
          }
          else {
              client.query('select hobby from hobbies', function (err, result) {
@@ -208,7 +209,7 @@ app.get('/gifts',function (req, res) {
                  });
              });
          }
-         done();
+
     });
 });
 
@@ -217,7 +218,8 @@ app.get('/gifts/:id',  function (req, res) {
 
          pool.connect(function (err, client, done) {
          if (err) {
-             console.log('не работает')
+             console.log('не работает');
+             done();
          }
          else {
              client.query('select * from gifts where id_gifts=$1',[id], function (err, result) {
@@ -231,7 +233,7 @@ app.get('/gifts/:id',  function (req, res) {
                 });
              });
          }
-         done();
+
     });
 
 
@@ -240,7 +242,8 @@ app.get('/gifts/:id',  function (req, res) {
 app.get('/reviews', function(req,res){
        pool.connect(function (err, client, done) {
          if (err) {
-             console.log('не работает')
+             console.log('не работает');
+             done();
          }
          else {
              client.query('select reviews.id_reviews, reviews.review, gifts_reviews.id_gifts,client.email  ' +
@@ -253,13 +256,13 @@ app.get('/reviews', function(req,res){
 
              });
          }
-         done();
+
     });
 });
 
 app.post('/yourgifts', urlencodedParser, function (req, res){
     pool.connect(function(err,client,done){
-        if (err){console.log('не работает')} else
+        if (err){console.log('не работает');done();} else
         { if (req.body.hobby !== 'Не выбрано') { console.log(req.body.hobby);
 
                 client.query('select * from gifts where id_gifts in (select gifts.id_gifts from gifts,recipient,celebration,hobbies,gifts_recipient,gifts_celebration,gifts_hobbies ' + 'where recipient.position=$1 and ' +
@@ -300,7 +303,6 @@ app.post('/yourgifts', urlencodedParser, function (req, res){
 
         }
         }
-        done();
 
     });
 
@@ -313,7 +315,7 @@ app.post('/buy', urlencodedParser, function (req, res){
         day: 'numeric'
     }
     pool.connect(function(err,client,done){
-        if (err){console.log('не работает')} else
+        if (err){console.log('не работает');done();} else
         {
             client.query('select id_client from client where email=$1',[req.cookies.email],function(err,result) {
                 var id_client =result.rows[0].id_client;
@@ -331,7 +333,7 @@ app.post('/buy', urlencodedParser, function (req, res){
                         res.redirect('/buy');
             });
         }
-        done();
+
 
 
     });
@@ -360,7 +362,7 @@ app.get('/buy',function (req, res) {
     }
 
     pool.connect(function(err,client,done){
-        if (err){console.log('не работает')} else
+        if (err){console.log('не работает');  done();} else
         {
             client.query('select id_client from client where email=$1',[req.cookies.email],function(err, result){
              client.query('select * from gifts_client where id_client=$1 and position=$2', [result.rows[0].id_client, true ], function (err, result) {
@@ -380,7 +382,7 @@ app.get('/buy',function (req, res) {
 
              });
              }
-    done();
+
 
 
     });
@@ -392,7 +394,7 @@ app.post('/buygift', urlencodedParser, function(req, res){
     var id = req.body.id_gift;
 
     pool.connect(function(err, client, done){
-       if (err){console.log('Не работает')} else
+       if (err){console.log('Не работает');done();} else
        {
            client.query('update gifts_client set position=false where gifts_client.id_gifts=$1 ',[id],function(err,result){
                if (err){console.log('Не работает')}
@@ -400,7 +402,7 @@ app.post('/buygift', urlencodedParser, function(req, res){
                 res.redirect('/buy');
            });
        }
-       done();
+
     });
 
 });
@@ -408,7 +410,7 @@ app.post('/buygift', urlencodedParser, function(req, res){
 app.get('/update',function (req, res) {
 
      pool.connect(function (err, client, done) {
-            if (err) console.log('не работает')
+            if (err) {console.log('не работает');done();}
             else {
                 client.query('select * from recipient',  function (err, result) {
 
@@ -425,7 +427,7 @@ app.get('/update',function (req, res) {
                         });
                 });
             }
-            done();
+
         });
 
 
@@ -437,7 +439,7 @@ app.post('/updategifts', urlencodedParser, function(req, res){
 
    if (!req.body.action){ var action = false ;} else{var action = true;}
         pool.connect(function (err, client, done) {
-            if (err) console.log('не работает')
+            if (err) {console.log('не работает'); done();}
             else {
                 client.query('BEGIN', function (err, result) {
                     client.query('insert into gifts(name,price,description,bonus,photo,action) values($1,$2,$3,$4,$5,$6);', [req.body.name, req.body.price, req.body.description, req.body.bonus, req.body.photo, action], function (err, result) {
@@ -478,7 +480,7 @@ app.post('/updategifts', urlencodedParser, function(req, res){
                 });
                 });
             }
-            done();
+
 
         });
 
@@ -487,14 +489,14 @@ app.post('/updategifts', urlencodedParser, function(req, res){
 
 app.get('/history', function (req, res){
     pool.connect(function(err,client,done){
-        if (err) console.log('не рабоате')
+        if (err) {console.log('не рабоате');done();}
         else {
             client.query('select gifts.name,gifts.price,gifts.photo,gifts.id_gifts,gifts.description from gifts,gifts_client,client where gifts.id_gifts = gifts_client.id_gifts and gifts_client.position=false and client.email=$1 and client.id_client=gifts_client.id_client',[req.cookies.email],function(err,result){
                     done();
                     res.render('history',{gifts:result.rows,email: req.cookies.email});
                 });
         }
-        done();
+
     });
 });
 
@@ -505,7 +507,7 @@ app.get('/errorpassword',function (req, res) {
 
 app.post('/comment',urlencodedParser, function(req, res){
    pool.connect(function(err,client,done){
-        if (err) console.log('не рабоате')
+        if (err) {console.log('не рабоате');done();}
         else {
             client.query('select id_client from client where email=$1',[req.cookies.email],function(err,result){
                 var id = result.rows[0].id_client;
@@ -519,7 +521,7 @@ app.post('/comment',urlencodedParser, function(req, res){
                        });
                    });
         }
-        done();
+
     });
 });
 
