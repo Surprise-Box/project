@@ -32,6 +32,7 @@ app.set('view engine', 'ejs');
 
 
 var bcrypt = require('bcryptjs');
+var saltcookie=process.env.user;
 
 
 
@@ -53,9 +54,8 @@ app.post('/', urlencodedParser, function (req, res) {
     if(!req.body.username) {
         pool.connect(function (err, client, done) {
             client.query('select * from client where client.email = $1', [req.body.email], function (err, result) {
-                if (result.rows[0] == undefined){done();res.redirect('/errorpassword');} else { console.log(result.rows[0]);
+                if (result.rows[0] == undefined){done();res.redirect('/errorpassword');} else {
                     if (result.rows.length != 0) {
-                        console.log('1', req.body.password, '2');
                         if (bcrypt.hashSync(req.body.password, result.rows[0].salt) == result.rows[0].password) {
                             res.cookie('name', result.rows[0].name, {
                                 expires: new Date(Date.now() + 14400000),
@@ -65,7 +65,7 @@ app.post('/', urlencodedParser, function (req, res) {
                                 expires: new Date(Date.now() + 14400000),
                                 httpOnly: true
                             });
-                            res.cookie('user', result.rows[0].super_user, {
+                            res.cookie('user', bcrypt.hashSync(result.rows[0].super_user, saltcookie) , {
                                 expires: new Date(Date.now() + 14400000),
                                 httpOnly: true
                             });
@@ -162,9 +162,12 @@ app.post('/deletereviews', urlencodedParser, function (req, res){
 });
 
 app.get('/profile',function (req, res) {
-     var obj ={
+
+    var obj ={
         email: req.cookies.email,
-         user: req.cookies.user
+         user: req.cookies.user,
+          super_user: bcrypt.hashSync('true', saltcookie)
+
     };
      if(req.cookies.email !== undefined) {
          res.render('profile', {obj: obj});
@@ -252,7 +255,9 @@ app.get('/reviews', function(req,res){
                  'reviews.id_reviews=gifts_reviews.id_reviews and ' +
                  'reviews.id_client=client.id_client', function (err, result) {
                  done();
-                 res.render('reviews',{email: req.cookies.email, name: req.cookies.name, reviews: result.rows});
+                  if (req.cookies.user == bcrypt.hashSync('true', saltcookie)) {
+                      res.render('reviews', {email: req.cookies.email, name: req.cookies.name, reviews: result.rows});
+                  }
 
              });
          }
@@ -262,7 +267,7 @@ app.get('/reviews', function(req,res){
 
 app.post('/yourgifts', urlencodedParser, function (req, res){
     pool.connect(function(err,client,done){
-        if (err){console.log('не работает');done();} else
+        if (err){console.log(err);done();} else
         { if (req.body.hobby !== 'Не выбрано') { console.log(req.body.hobby);
 
                 client.query('select * from gifts where id_gifts in (select gifts.id_gifts from gifts,recipient,celebration,hobbies,gifts_recipient,gifts_celebration,gifts_hobbies ' + 'where recipient.position=$1 and ' +
@@ -420,7 +425,7 @@ app.get('/update',function (req, res) {
                         client.query ('select * from celebration', function(err, result){
 
                         done();
-                        if (req.cookies.user == 'true') {
+                        if (req.cookies.user == bcrypt.hashSync('true', saltcookie)) {
                             res.render('update', {email: req.cookies.email, recipient: recipient, hobby: hobby, celebration: result.rows});
                         }
                            });
@@ -507,7 +512,7 @@ app.get('/errorpassword',function (req, res) {
 
 app.post('/comment',urlencodedParser, function(req, res){
    pool.connect(function(err,client,done){
-        if (err) {console.log('не рабоате');done();}
+        if (err) {console.log(err);done();}
         else {
             client.query('select id_client from client where email=$1',[req.cookies.email],function(err,result){
                 var id = result.rows[0].id_client;
@@ -527,7 +532,7 @@ app.post('/comment',urlencodedParser, function(req, res){
 
 app.get('/connect', function(req, res){
     pool.connect(function (err, client, done) {
-       if (err) { done(err);} else {return res.sendStatus(200); done();}
+       if (err) { console.log(err);done(err);} else {return res.sendStatus(200); done();}
     });
 });
 app.listen(process.env.PORT);

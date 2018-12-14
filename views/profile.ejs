@@ -65,7 +65,7 @@
             <div class="site-heading">
 
 
-                <% if (obj.user == 'true') {%>
+                <% if (obj.user == obj.super_user) {%>
                 <a href="/update" >
                     <button type="button" class="btn btn-primary btn-lg" >
                        Добавить подарок
